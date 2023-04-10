@@ -7,6 +7,15 @@
 
 import SwiftUI
 
+enum AnimationState {
+    case animation
+    case noAnimation
+}
+enum SegmentAnimationState: Hashable {
+    case Segment1Animation
+    case Segment2Animation
+}
+
 struct ContentView: View {
     @State var segmentIndex: Int = 0
     let contentViewModel: ContentViewModel
@@ -26,12 +35,13 @@ struct ContentView: View {
     @ViewBuilder
     func getSubSegmentView(with index: Int) -> some View {
         if segmentIndex == 0 {
-            Segment1View(canAnimate: getSegment1AnimationStatus())
+            Segment1View(canAnimate: contentViewModel.canAnimate(.Segment1Animation))
         } else {
-            Segment2View(canAnimate: getSegment2AnimationStatus())
+            Segment2View(canAnimate: contentViewModel.canAnimate(.Segment1Animation))
         }
     }
     
+    // MARK: - Boolean approach
     func getSegment1AnimationStatus() -> Bool {
         let status = contentViewModel.segment1AnimationStatus
         if !status {
@@ -50,7 +60,7 @@ struct ContentView: View {
 }
 
 class ContentViewModel {
-    
+    // Boolean approach
     private(set) var segment1AnimationStatus: Bool = false
     private(set) var segment2AnimationStatus: Bool = false
     
@@ -59,6 +69,19 @@ class ContentViewModel {
     }
     func updateSegment2AnimationStatus(_ status: Bool) {
         segment2AnimationStatus = status
+    }
+    
+    // Enum approach
+    private var segmentAnimationState: [SegmentAnimationState: AnimationState] = [:]
+    
+    func canAnimate(_ view: SegmentAnimationState) -> Bool {
+        if segmentAnimationState.keys.contains(view) {
+            if let status = segmentAnimationState[view] {
+                return status == .animation
+            }
+        }
+        segmentAnimationState[view] = .noAnimation
+        return true
     }
 }
 
