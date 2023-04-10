@@ -37,7 +37,7 @@ struct ContentView: View {
         if segmentIndex == 0 {
             Segment1View(canAnimate: contentViewModel.canAnimate(.Segment1Animation))
         } else {
-            Segment2View(canAnimate: contentViewModel.canAnimate(.Segment1Animation))
+            Segment2View(canAnimate: contentViewModel.canAnimate(.Segment2Animation))
         }
     }
     
