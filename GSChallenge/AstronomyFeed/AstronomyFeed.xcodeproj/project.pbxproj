@@ -74,8 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				98B718FC2B948D1B0025CAF6 /* AstronomyFeed.h */,
-				98B719112B948E690025CAF6 /* FeedPicture.swift */,
-				98B719132B948F020025CAF6 /* FeedLoader.swift */,
+				98B719152B948FDB0025CAF6 /* FeedFeature */,
 			);
 			path = AstronomyFeed;
 			sourceTree = "<group>";
@@ -86,6 +85,15 @@
 				98B719062B948D1B0025CAF6 /* AstronomyFeedTests.swift */,
 			);
 			path = AstronomyFeedTests;
+			sourceTree = "<group>";
+		};
+		98B719152B948FDB0025CAF6 /* FeedFeature */ = {
+			isa = PBXGroup;
+			children = (
+				98B719112B948E690025CAF6 /* FeedPicture.swift */,
+				98B719132B948F020025CAF6 /* FeedLoader.swift */,
+			);
+			path = FeedFeature;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
