@@ -2,11 +2,10 @@
 //  AstronomyFeedTests.swift
 //  AstronomyFeedTests
 //
-//  Created by Sai Pasumarthy on 03/03/24.
+//  Created by Sai Pasumarthy on 10/03/24.
 //
 
 import XCTest
-@testable import AstronomyFeed
 
 final class AstronomyFeedTests: XCTestCase {
 
@@ -28,7 +27,7 @@ final class AstronomyFeedTests: XCTestCase {
 
     func testPerformanceExample() throws {
         // This is an example of a performance test case.
-        self.measure {
+        measure {
             // Put the code you want to measure the time of here.
         }
     }
