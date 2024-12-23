@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		98B719462B9DF2170025CAF6 /* AstronomyFeed.h in Headers */ = {isa = PBXBuildFile; fileRef = 98B719452B9DF2170025CAF6 /* AstronomyFeed.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		98B719532B9DF22E0025CAF6 /* AstronomyFeedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B719522B9DF22E0025CAF6 /* AstronomyFeedTests.swift */; };
+		98B719532B9DF22E0025CAF6 /* RemoteFeedLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B719522B9DF22E0025CAF6 /* RemoteFeedLoaderTests.swift */; };
 		98B719542B9DF22E0025CAF6 /* AstronomyFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B719422B9DF2170025CAF6 /* AstronomyFeed.framework */; };
 		98B7195D2B9DF2730025CAF6 /* FeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B7195B2B9DF2730025CAF6 /* FeedLoader.swift */; };
 		98B7195E2B9DF2730025CAF6 /* FeedPicture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B7195C2B9DF2730025CAF6 /* FeedPicture.swift */; };
@@ -28,7 +28,7 @@
 		98B719422B9DF2170025CAF6 /* AstronomyFeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AstronomyFeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		98B719452B9DF2170025CAF6 /* AstronomyFeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AstronomyFeed.h; sourceTree = "<group>"; };
 		98B719502B9DF22E0025CAF6 /* AstronomyFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AstronomyFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		98B719522B9DF22E0025CAF6 /* AstronomyFeedTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AstronomyFeedTests.swift; sourceTree = "<group>"; };
+		98B719522B9DF22E0025CAF6 /* RemoteFeedLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedLoaderTests.swift; sourceTree = "<group>"; };
 		98B7195B2B9DF2730025CAF6 /* FeedLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedLoader.swift; sourceTree = "<group>"; };
 		98B7195C2B9DF2730025CAF6 /* FeedPicture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedPicture.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -82,7 +82,7 @@
 		98B719512B9DF22E0025CAF6 /* AstronomyFeedTests */ = {
 			isa = PBXGroup;
 			children = (
-				98B719522B9DF22E0025CAF6 /* AstronomyFeedTests.swift */,
+				98B719522B9DF22E0025CAF6 /* RemoteFeedLoaderTests.swift */,
 			);
 			path = AstronomyFeedTests;
 			sourceTree = "<group>";
@@ -154,7 +154,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1500;
-				LastUpgradeCheck = 1500;
+				LastUpgradeCheck = 1530;
 				TargetAttributes = {
 					98B719412B9DF2170025CAF6 = {
 						CreatedOnToolsVersion = 15.0;
@@ -214,7 +214,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				98B719532B9DF22E0025CAF6 /* AstronomyFeedTests.swift in Sources */,
+				98B719532B9DF22E0025CAF6 /* RemoteFeedLoaderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,6 +264,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -330,6 +331,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -356,9 +358,11 @@
 		98B7194A2B9DF2170025CAF6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = PS87393A3H;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -387,9 +391,11 @@
 		98B7194B2B9DF2170025CAF6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = PS87393A3H;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -421,6 +427,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = PS87393A3H;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
@@ -437,6 +444,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = PS87393A3H;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
