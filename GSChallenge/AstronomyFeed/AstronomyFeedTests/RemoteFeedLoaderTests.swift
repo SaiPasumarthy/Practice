@@ -104,14 +104,14 @@ final class RemoteFeedLoaderTests: XCTestCase {
     }
     
     private func expect(sut: RemoteFeedLoader, toCompleteWithError error: RemoteFeedLoader.Error, when action: () -> Void) {
-        var capturedErrors = [RemoteFeedLoader.Error]()
+        var capturedResults = [Result<[FeedPicture], RemoteFeedLoader.Error>]()
         
         sut.load {
-            capturedErrors.append($0)
+            capturedResults.append($0)
         }
         
         action()
         
-        XCTAssertEqual(capturedErrors, [error])
+        XCTAssertEqual(capturedResults, [.failure(error)])
     }
 }

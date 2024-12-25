@@ -7,9 +7,16 @@
 
 import Foundation
 
-public struct FeedPicture {
-    let date: String
-    let explanation: String
-    let title: String
-    let url: String
+public struct FeedPicture: Equatable {
+    public let date: String
+    public let explanation: String
+    public let title: String
+    public let url: String
+    
+    public init(date: String, explanation: String, title: String, url: String) {
+        self.date = date
+        self.explanation = explanation
+        self.title = title
+        self.url = url
+    }
 }
