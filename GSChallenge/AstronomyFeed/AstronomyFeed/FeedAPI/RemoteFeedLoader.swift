@@ -31,15 +31,43 @@ public final class RemoteFeedLoader {
         client.get(from: url) { result in
             switch result {
             case let .success((data, response)):
-                if response.statusCode == 200,
-                    let picture = try? JSONDecoder().decode(FeedPicture.self, from: data) {
-                    completion(.success([picture]))
-                } else {
+                do {
+                    let feedPicture = try FeedPictureMapper.map(data, response)
+                    completion(.success([feedPicture]))
+                } catch {
                     completion(.failure(.invalidData))
                 }
             case .failure:
                 completion(.failure(.connectivity))
             }
         }
+    }
+}
+
+private class FeedPictureMapper {
+    private struct RemoteFeedPicture: Decodable {
+        private let date: String
+        private let explanation: String
+        private let title: String
+        private let url: String
+        
+        var picture: FeedPicture {
+            FeedPicture(
+                date: date,
+                explanation: explanation,
+                title: title,
+                url: url
+            )
+        }
+    }
+    
+    static let OK_200 = 200
+    
+    static func map(_ data: Data, _  response: HTTPURLResponse) throws -> FeedPicture {
+        guard response.statusCode == OK_200 else {
+            throw RemoteFeedLoader.Error.invalidData
+        }
+        
+        return try JSONDecoder().decode(RemoteFeedPicture.self, from: data).picture
     }
 }
