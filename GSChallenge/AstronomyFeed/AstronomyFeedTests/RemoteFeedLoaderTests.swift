@@ -40,7 +40,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
         let (sut, client) = makeSUT(url: url)
         let clientError = NSError(domain: "Test", code: 0)
 
-        expect(sut: sut, toCompleteWithError: .connectivity) {
+        expect(sut: sut, toCompleteWithResult: .failure(.connectivity)) {
             client.complete(with: clientError)
         }
     }
@@ -51,7 +51,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
         let samples = [199, 201, 300, 400, 500]
         
         samples.enumerated().forEach { index, code in
-            expect(sut: sut, toCompleteWithError: .invalidData) {
+            expect(sut: sut, toCompleteWithResult: .failure(.invalidData)) {
                 client.complete(with: code, at: index)
             }
         }
@@ -62,7 +62,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
         let (sut, client) = makeSUT(url: url)
         let invalidData = Data.init("Invalid JSON".utf8)
 
-        expect(sut: sut, toCompleteWithError: .invalidData) {
+        expect(sut: sut, toCompleteWithResult: .failure(.invalidData)) {
             client.complete(with: 200, data: invalidData)
         }
     }
@@ -85,14 +85,10 @@ final class RemoteFeedLoaderTests: XCTestCase {
         ]
         
         let data = try! JSONSerialization.data(withJSONObject: pictureJSON)
-
-        sut.load {
-            capturedResults.append($0)
-        }
         
-        client.complete(with: 200, data: data)
-                
-        XCTAssertEqual(capturedResults, [.success([picture])])
+        expect(sut: sut, toCompleteWithResult: .success([picture])) {
+            client.complete(with: 200, data: data)
+        }
     }
     
     // MARK: - Helpers
@@ -131,7 +127,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
         return (sut, client)
     }
     
-    private func expect(sut: RemoteFeedLoader, toCompleteWithError error: RemoteFeedLoader.Error, when action: () -> Void) {
+    private func expect(sut: RemoteFeedLoader, toCompleteWithResult result: Result<[FeedPicture], RemoteFeedLoader.Error>, when action: () -> Void) {
         var capturedResults = [Result<[FeedPicture], RemoteFeedLoader.Error>]()
         
         sut.load {
@@ -140,6 +136,6 @@ final class RemoteFeedLoaderTests: XCTestCase {
         
         action()
         
-        XCTAssertEqual(capturedResults, [.failure(error)])
+        XCTAssertEqual(capturedResults, [result])
     }
 }
