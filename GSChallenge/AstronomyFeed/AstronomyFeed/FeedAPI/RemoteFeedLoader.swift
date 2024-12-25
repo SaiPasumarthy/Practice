@@ -61,7 +61,7 @@ private class FeedPictureMapper {
         }
     }
     
-    static let OK_200 = 200
+    static var OK_200: Int { return 200 }
     
     static func map(_ data: Data, _  response: HTTPURLResponse) throws -> FeedPicture {
         guard response.statusCode == OK_200 else {
