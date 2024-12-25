@@ -67,6 +67,34 @@ final class RemoteFeedLoaderTests: XCTestCase {
         }
     }
     
+    func test_load_deliversPicturesOn200ResponseWithValidData() {
+        let url = URL(string: "https://a-given-url.com")!
+        let (sut, client) = makeSUT(url: url)
+        var capturedResults = [Result<[FeedPicture], RemoteFeedLoader.Error>]()
+        let picture = FeedPicture(
+            date: "2024-12-25",
+            explanation: "A test explanation",
+            title: "Space Star",
+            url: "https://a-image-url.com"
+        )
+        let pictureJSON = [
+            "date": picture.date,
+            "explanation": picture.explanation,
+            "title": picture.title,
+            "url": picture.url,
+        ]
+        
+        let data = try! JSONSerialization.data(withJSONObject: pictureJSON)
+
+        sut.load {
+            capturedResults.append($0)
+        }
+        
+        client.complete(with: 200, data: data)
+                
+        XCTAssertEqual(capturedResults, [.success([picture])])
+    }
+    
     // MARK: - Helpers
     
     private class HTTPClientSpy: HTTPClient {

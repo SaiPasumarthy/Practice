@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct FeedPicture: Equatable {
+public struct FeedPicture: Equatable, Decodable {
     public let date: String
     public let explanation: String
     public let title: String
