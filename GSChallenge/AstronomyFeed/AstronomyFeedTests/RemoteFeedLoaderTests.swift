@@ -40,7 +40,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
         let (sut, client) = makeSUT(url: url)
         let clientError = NSError(domain: "Test", code: 0)
 
-        expect(sut: sut, toCompleteWithResult: .failure(.connectivity)) {
+        expect(sut: sut, toCompleteWithResult: failure(.connectivity)) {
             client.complete(with: clientError)
         }
     }
@@ -51,7 +51,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
         let samples = [199, 201, 300, 400, 500]
         
         samples.enumerated().forEach { index, code in
-            expect(sut: sut, toCompleteWithResult: .failure(.invalidData)) {
+            expect(sut: sut, toCompleteWithResult: failure(.invalidData)) {
                 let picture = makePicture()
                 let json = makePictureJSON(json: picture.json)
                 client.complete(with: code, data: json, at: index)
@@ -64,7 +64,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
         let (sut, client) = makeSUT(url: url)
         let invalidData = Data.init("Invalid JSON".utf8)
 
-        expect(sut: sut, toCompleteWithResult: .failure(.invalidData)) {
+        expect(sut: sut, toCompleteWithResult: failure(.invalidData)) {
             client.complete(with: 200, data: invalidData)
         }
     }
@@ -85,7 +85,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
         let client = HTTPClientSpy()
         var sut: RemoteFeedLoader? = RemoteFeedLoader(url: url, client: client)
         
-        var capturedResults = [Result<[FeedPicture], RemoteFeedLoader.Error>]()
+        var capturedResults = [RemoteFeedLoader.Result]()
         sut?.load {
             capturedResults.append($0)
         }
@@ -94,7 +94,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
         let data = makePictureJSON(json: makePicture().json)
         client.complete(with: 200, data: data)
         
-        XCTAssertEqual(capturedResults, [])
+        XCTAssertTrue(capturedResults.isEmpty)
     }
 
     // MARK: - Helpers
@@ -124,6 +124,10 @@ final class RemoteFeedLoaderTests: XCTestCase {
             let clientResponse = (data: data, response: response)
             messages[index].completion(.success(clientResponse))
         }
+    }
+    
+    private func failure(_ error: RemoteFeedLoader.Error) -> RemoteFeedLoader.Result {
+        return .failure(error)
     }
     
     private func makeSUT(url: URL = URL(string: "https://a-url.com")!, file: StaticString = #filePath, line: UInt = #line) -> (sut: RemoteFeedLoader, client: HTTPClientSpy) {
@@ -162,15 +166,28 @@ final class RemoteFeedLoaderTests: XCTestCase {
         return try! JSONSerialization.data(withJSONObject: json)
     }
     
-    private func expect(sut: RemoteFeedLoader, toCompleteWithResult result: Result<[FeedPicture], RemoteFeedLoader.Error>, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
-        var capturedResults = [Result<[FeedPicture], RemoteFeedLoader.Error>]()
+    private func expect(sut: RemoteFeedLoader, toCompleteWithResult expectedResult: RemoteFeedLoader.Result, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
         
-        sut.load {
-            capturedResults.append($0)
+        let exp = expectation(description: "Wait for load completion")
+        
+        sut.load { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case let (.success(receivedPicture), .success(expectedPicture)):
+                XCTAssertEqual(receivedPicture, expectedPicture, file: file, line: line)
+                
+            case let (.failure(receivedError as RemoteFeedLoader.Error), .failure(expectedError as RemoteFeedLoader.Error)):
+                XCTAssertEqual(receivedError, expectedError, file: file, line: line)
+
+            default:
+                XCTFail("Expected result \(expectedResult) but got \(receivedResult) instead")
+            }
+            
+            exp.fulfill()
         }
         
         action()
         
-        XCTAssertEqual(capturedResults, [result], file: file, line: line)
+        wait(for: [exp], timeout: 1.0)
+        
     }
 }
