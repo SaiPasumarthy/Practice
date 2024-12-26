@@ -74,7 +74,6 @@ final class RemoteFeedLoaderTests: XCTestCase {
         let (sut, client) = makeSUT(url: url)
         let picture = makePicture()
                 
-        
         expect(sut: sut, toCompleteWithResult: .success([picture.model])) {
             let data = makePictureJSON(json: picture.json)
             client.complete(with: 200, data: data)

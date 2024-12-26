@@ -12,6 +12,7 @@
 		98B719542B9DF22E0025CAF6 /* AstronomyFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B719422B9DF2170025CAF6 /* AstronomyFeed.framework */; };
 		98B7195D2B9DF2730025CAF6 /* FeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B7195B2B9DF2730025CAF6 /* FeedLoader.swift */; };
 		98B7195E2B9DF2730025CAF6 /* FeedPicture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B7195C2B9DF2730025CAF6 /* FeedPicture.swift */; };
+		98CF75242D1D6FE3008930A8 /* HTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CF75232D1D6FE3008930A8 /* HTTPClient.swift */; };
 		98D998342D19CD2B00D26162 /* RemoteFeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D998332D19CD2B00D26162 /* RemoteFeedLoader.swift */; };
 /* End PBXBuildFile section */
 
@@ -32,6 +33,7 @@
 		98B719522B9DF22E0025CAF6 /* RemoteFeedLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedLoaderTests.swift; sourceTree = "<group>"; };
 		98B7195B2B9DF2730025CAF6 /* FeedLoader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedLoader.swift; sourceTree = "<group>"; };
 		98B7195C2B9DF2730025CAF6 /* FeedPicture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedPicture.swift; sourceTree = "<group>"; };
+		98CF75232D1D6FE3008930A8 /* HTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPClient.swift; sourceTree = "<group>"; };
 		98D998332D19CD2B00D26162 /* RemoteFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -103,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				98D998332D19CD2B00D26162 /* RemoteFeedLoader.swift */,
+				98CF75232D1D6FE3008930A8 /* HTTPClient.swift */,
 			);
 			path = FeedAPI;
 			sourceTree = "<group>";
@@ -218,6 +221,7 @@
 			files = (
 				98B7195E2B9DF2730025CAF6 /* FeedPicture.swift in Sources */,
 				98D998342D19CD2B00D26162 /* RemoteFeedLoader.swift in Sources */,
+				98CF75242D1D6FE3008930A8 /* HTTPClient.swift in Sources */,
 				98B7195D2B9DF2730025CAF6 /* FeedLoader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
