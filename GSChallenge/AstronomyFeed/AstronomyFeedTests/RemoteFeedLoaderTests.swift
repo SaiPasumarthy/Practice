@@ -109,11 +109,20 @@ final class RemoteFeedLoaderTests: XCTestCase {
         }
     }
     
-    private func makeSUT(url: URL = URL(string: "https://a-url.com")!) -> (sut: RemoteFeedLoader, client: HTTPClientSpy) {
+    private func makeSUT(url: URL = URL(string: "https://a-url.com")!, file: StaticString = #filePath, line: UInt = #line) -> (sut: RemoteFeedLoader, client: HTTPClientSpy) {
         let client = HTTPClientSpy()
         let sut = RemoteFeedLoader(url: url, client: client)
         
+        trackMemoryLeaks(for: sut, file: file, line: line)
+        trackMemoryLeaks(for: client, file: file, line: line)
+        
         return (sut, client)
+    }
+    
+    private func trackMemoryLeaks(for instance: AnyObject, file: StaticString = #filePath, line: UInt = #line) {
+        addTeardownBlock { [weak instance] in
+            XCTAssertNil(instance, "Instance should have been deallocated. Potential memory leak.", file: file, line: line)
+        }
     }
     
     private func makePicture() -> (model: FeedPicture, json: [String: Any]) {
@@ -136,7 +145,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
         return try! JSONSerialization.data(withJSONObject: json)
     }
     
-    private func expect(sut: RemoteFeedLoader, toCompleteWithResult result: Result<[FeedPicture], RemoteFeedLoader.Error>, when action: () -> Void) {
+    private func expect(sut: RemoteFeedLoader, toCompleteWithResult result: Result<[FeedPicture], RemoteFeedLoader.Error>, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
         var capturedResults = [Result<[FeedPicture], RemoteFeedLoader.Error>]()
         
         sut.load {
@@ -145,6 +154,6 @@ final class RemoteFeedLoaderTests: XCTestCase {
         
         action()
         
-        XCTAssertEqual(capturedResults, [result])
+        XCTAssertEqual(capturedResults, [result], file: file, line: line)
     }
 }
