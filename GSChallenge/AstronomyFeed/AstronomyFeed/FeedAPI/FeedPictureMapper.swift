@@ -26,10 +26,10 @@ final class FeedPictureMapper {
     
     static private var OK_200: Int { return 200 }
         
-    static func map(_ data: Data, _ response: HTTPURLResponse) -> Result<[FeedPicture], RemoteFeedLoader.Error> {
+    static func map(_ data: Data, _ response: HTTPURLResponse) -> RemoteFeedLoader.Result {
         guard response.statusCode == OK_200,
                 let feed = try? JSONDecoder().decode(RemoteFeedPicture.self, from: data) else {
-            return .failure(.invalidData)
+            return .failure(RemoteFeedLoader.Error.invalidData)
         }
 
         return .success([feed.picture])
