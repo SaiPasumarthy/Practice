@@ -91,8 +91,7 @@
 		98B719512B9DF22E0025CAF6 /* AstronomyFeedTests */ = {
 			isa = PBXGroup;
 			children = (
-				98B719522B9DF22E0025CAF6 /* RemoteFeedLoaderTests.swift */,
-				98CF75272D1DC94E008930A8 /* URLSessionHTTPClientTests.swift */,
+				98CF75292D1F068A008930A8 /* FeedAPI */,
 			);
 			path = AstronomyFeedTests;
 			sourceTree = "<group>";
@@ -104,6 +103,15 @@
 				98B7195C2B9DF2730025CAF6 /* FeedPicture.swift */,
 			);
 			path = FeedFeature;
+			sourceTree = "<group>";
+		};
+		98CF75292D1F068A008930A8 /* FeedAPI */ = {
+			isa = PBXGroup;
+			children = (
+				98B719522B9DF22E0025CAF6 /* RemoteFeedLoaderTests.swift */,
+				98CF75272D1DC94E008930A8 /* URLSessionHTTPClientTests.swift */,
+			);
+			path = FeedAPI;
 			sourceTree = "<group>";
 		};
 		98D998322D19CD1200D26162 /* FeedAPI */ = {
