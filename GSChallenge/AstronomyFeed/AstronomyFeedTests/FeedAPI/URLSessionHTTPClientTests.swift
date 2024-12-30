@@ -27,16 +27,25 @@ class URLSessionHTTPClient {
 
 final class URLSessionHTTPClientTests: XCTestCase {
     
-    func test_getFromURL_failsOnRequestError() {
-        let url = URL(string: "https://any-url.com")!
-        let error = NSError(domain: "any error", code: 1)
+    override func setUp() {
+        super.setUp()
+        
         URLProtocolStub.startIntercepting()
+    }
+    
+    override func tearDown() {
+        super.tearDown()
+        
+        URLProtocolStub.stopIntercepting()
+    }
+    
+    func test_getFromURL_failsOnRequestError() {
+        let error = anyNSError()
         URLProtocolStub.stub(data: nil, response: nil, error: error)
         
-        let sut = URLSessionHTTPClient()
         let exp = expectation(description: "Wait for load to complete")
         
-        sut.get(from: url) { result in
+        makeSUT().get(from: anyURL()) { result in
             switch result {
             case let .failure(receivedError as NSError):
                 XCTAssertEqual(receivedError.domain, error.domain)
@@ -50,25 +59,34 @@ final class URLSessionHTTPClientTests: XCTestCase {
         }
         
         wait(for: [exp], timeout: 1.0)
-        URLProtocolStub.stopIntercepting()
     }
     
     func test_getFromURL_performsGETRequestWithURL() {
-        let url = URL(string: "https://any-url.com")!
+        let url = anyURL()
         let exp = expectation(description: "Wait for load to complete")
 
-        URLProtocolStub.startIntercepting()
         URLProtocolStub.observeRequests { request in
             XCTAssertEqual(request.url, url)
             exp.fulfill()
         }
-        
-        let sut = URLSessionHTTPClient()
-        
-        sut.get(from: url) { _ in }
+                
+        makeSUT().get(from: url) { _ in }
         
         wait(for: [exp], timeout: 1.0)
-        URLProtocolStub.stopIntercepting()
+    }
+    
+    // MARK: - Helpers
+    
+    private func makeSUT() -> URLSessionHTTPClient {
+        URLSessionHTTPClient()
+    }
+    
+    private func anyURL() -> URL {
+        URL(string: "https://any-url.com")!
+    }
+    
+    private func anyNSError() -> NSError {
+        NSError(domain: "any error", code: 1)
     }
     
     private class URLProtocolStub: URLProtocol {
