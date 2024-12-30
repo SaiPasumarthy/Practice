@@ -139,13 +139,7 @@ final class RemoteFeedLoaderTests: XCTestCase {
         
         return (sut, client)
     }
-    
-    private func trackMemoryLeaks(for instance: AnyObject, file: StaticString = #filePath, line: UInt = #line) {
-        addTeardownBlock { [weak instance] in
-            XCTAssertNil(instance, "Instance should have been deallocated. Potential memory leak.", file: file, line: line)
-        }
-    }
-    
+        
     private func makePicture() -> (model: FeedPicture, json: [String: Any]) {
         let picture = FeedPicture(
             date: "2024-12-25",
