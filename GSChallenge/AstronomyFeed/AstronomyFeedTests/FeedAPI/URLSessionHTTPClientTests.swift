@@ -8,29 +8,6 @@
 import XCTest
 import AstronomyFeed
 
-class URLSessionHTTPClient: HTTPClient {
-    private let session: URLSession
-    
-    init(session: URLSession = .shared) {
-        self.session = session
-    }
-    
-    private struct UnexpectedValuesRepresentation: Error {}
-    
-    func get(from url: URL, completion: @escaping (HTTPClientResult) -> Void) {
-        session.dataTask(with: URLRequest(url: url)) { data, response, error in
-            if let error  {
-                completion(.failure(error))
-            } else if let data, let response = response as? HTTPURLResponse {
-                completion(.success((data, response)))
-            } else {
-                completion(.failure(UnexpectedValuesRepresentation()))
-            }
-        }
-        .resume()
-    }
-}
-
 final class URLSessionHTTPClientTests: XCTestCase {
     
     override func setUp() {
@@ -126,7 +103,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
     private func resultValuesFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #filePath, line: UInt = #line) -> (data: Data, response: HTTPURLResponse)? {
         URLProtocolStub.stub(data: data, response: response, error: error)
         var receivedValues: (Data, HTTPURLResponse)?
-        var result = resultFor(data: data, response: response, error: error)
+        let result = resultFor(data: data, response: response, error: error)
         
         switch result {
         case let .success((data, response)):
@@ -143,7 +120,7 @@ final class URLSessionHTTPClientTests: XCTestCase {
     private func resultErrorFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #filePath, line: UInt = #line) -> Error? {
         URLProtocolStub.stub(data: data, response: response, error: error)
         var receivedError: Error?
-        var result = resultFor(data: data, response: response, error: error)
+        let result = resultFor(data: data, response: response, error: error)
         
         switch result {
         case let .failure(error):
