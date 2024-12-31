@@ -17,11 +17,21 @@
 		98CF75282D1DC94E008930A8 /* URLSessionHTTPClientTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CF75272D1DC94E008930A8 /* URLSessionHTTPClientTests.swift */; };
 		98CF752B2D2306F6008930A8 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CF752A2D2306F6008930A8 /* XCTestCase+MemoryLeakTracking.swift */; };
 		98CF752D2D23BEC0008930A8 /* URLSessionHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CF752C2D23BEC0008930A8 /* URLSessionHTTPClient.swift */; };
+		98CF75372D23C62C008930A8 /* AstronomyFeedAPIEndToEndTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CF75362D23C62C008930A8 /* AstronomyFeedAPIEndToEndTests.swift */; };
+		98CF75382D23C62C008930A8 /* AstronomyFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B719422B9DF2170025CAF6 /* AstronomyFeed.framework */; };
+		98CF753F2D23C945008930A8 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98CF752A2D2306F6008930A8 /* XCTestCase+MemoryLeakTracking.swift */; };
 		98D998342D19CD2B00D26162 /* RemoteFeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98D998332D19CD2B00D26162 /* RemoteFeedLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		98B719552B9DF22E0025CAF6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 98B719392B9DF2170025CAF6 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 98B719412B9DF2170025CAF6;
+			remoteInfo = AstronomyFeed;
+		};
+		98CF75392D23C62C008930A8 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 98B719392B9DF2170025CAF6 /* Project object */;
 			proxyType = 1;
@@ -43,6 +53,9 @@
 		98CF752A2D2306F6008930A8 /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
 		98CF752C2D23BEC0008930A8 /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
 		98CF752F2D23C545008930A8 /* AstronomyFeedTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = AstronomyFeedTests.xctestplan; sourceTree = "<group>"; };
+		98CF75342D23C62C008930A8 /* AstronomyFeedAPIEndToEndTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AstronomyFeedAPIEndToEndTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		98CF75362D23C62C008930A8 /* AstronomyFeedAPIEndToEndTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AstronomyFeedAPIEndToEndTests.swift; sourceTree = "<group>"; };
+		98CF753E2D23C64F008930A8 /* AstronomyFeedAPIEndToEndTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = AstronomyFeedAPIEndToEndTests.xctestplan; sourceTree = "<group>"; };
 		98D998332D19CD2B00D26162 /* RemoteFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -62,6 +75,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		98CF75312D23C62C008930A8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				98CF75382D23C62C008930A8 /* AstronomyFeed.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -70,6 +91,7 @@
 			children = (
 				98B719442B9DF2170025CAF6 /* AstronomyFeed */,
 				98B719512B9DF22E0025CAF6 /* AstronomyFeedTests */,
+				98CF75352D23C62C008930A8 /* AstronomyFeedAPIEndToEndTests */,
 				98B719432B9DF2170025CAF6 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -79,6 +101,7 @@
 			children = (
 				98B719422B9DF2170025CAF6 /* AstronomyFeed.framework */,
 				98B719502B9DF22E0025CAF6 /* AstronomyFeedTests.xctest */,
+				98CF75342D23C62C008930A8 /* AstronomyFeedAPIEndToEndTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -119,6 +142,15 @@
 				98CF752A2D2306F6008930A8 /* XCTestCase+MemoryLeakTracking.swift */,
 			);
 			path = FeedAPI;
+			sourceTree = "<group>";
+		};
+		98CF75352D23C62C008930A8 /* AstronomyFeedAPIEndToEndTests */ = {
+			isa = PBXGroup;
+			children = (
+				98CF753E2D23C64F008930A8 /* AstronomyFeedAPIEndToEndTests.xctestplan */,
+				98CF75362D23C62C008930A8 /* AstronomyFeedAPIEndToEndTests.swift */,
+			);
+			path = AstronomyFeedAPIEndToEndTests;
 			sourceTree = "<group>";
 		};
 		98D998322D19CD1200D26162 /* FeedAPI */ = {
@@ -182,6 +214,24 @@
 			productReference = 98B719502B9DF22E0025CAF6 /* AstronomyFeedTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		98CF75332D23C62C008930A8 /* AstronomyFeedAPIEndToEndTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 98CF753B2D23C62C008930A8 /* Build configuration list for PBXNativeTarget "AstronomyFeedAPIEndToEndTests" */;
+			buildPhases = (
+				98CF75302D23C62C008930A8 /* Sources */,
+				98CF75312D23C62C008930A8 /* Frameworks */,
+				98CF75322D23C62C008930A8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				98CF753A2D23C62C008930A8 /* PBXTargetDependency */,
+			);
+			name = AstronomyFeedAPIEndToEndTests;
+			productName = AstronomyFeedAPIEndToEndTests;
+			productReference = 98CF75342D23C62C008930A8 /* AstronomyFeedAPIEndToEndTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -189,7 +239,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1500;
+				LastSwiftUpdateCheck = 1530;
 				LastUpgradeCheck = 1530;
 				TargetAttributes = {
 					98B719412B9DF2170025CAF6 = {
@@ -197,6 +247,9 @@
 					};
 					98B7194F2B9DF22E0025CAF6 = {
 						CreatedOnToolsVersion = 15.0;
+					};
+					98CF75332D23C62C008930A8 = {
+						CreatedOnToolsVersion = 15.3;
 					};
 				};
 			};
@@ -215,6 +268,7 @@
 			targets = (
 				98B719412B9DF2170025CAF6 /* AstronomyFeed */,
 				98B7194F2B9DF22E0025CAF6 /* AstronomyFeedTests */,
+				98CF75332D23C62C008930A8 /* AstronomyFeedAPIEndToEndTests */,
 			);
 		};
 /* End PBXProject section */
@@ -228,6 +282,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		98B7194E2B9DF22E0025CAF6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		98CF75322D23C62C008930A8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -260,6 +321,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		98CF75302D23C62C008930A8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				98CF75372D23C62C008930A8 /* AstronomyFeedAPIEndToEndTests.swift in Sources */,
+				98CF753F2D23C945008930A8 /* XCTestCase+MemoryLeakTracking.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -267,6 +337,11 @@
 			isa = PBXTargetDependency;
 			target = 98B719412B9DF2170025CAF6 /* AstronomyFeed */;
 			targetProxy = 98B719552B9DF22E0025CAF6 /* PBXContainerItemProxy */;
+		};
+		98CF753A2D23C62C008930A8 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 98B719412B9DF2170025CAF6 /* AstronomyFeed */;
+			targetProxy = 98CF75392D23C62C008930A8 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -497,6 +572,38 @@
 			};
 			name = Release;
 		};
+		98CF753C2D23C62C008930A8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PS87393A3H;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = sparklers.AstronomyFeedAPIEndToEndTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		98CF753D2D23C62C008930A8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = PS87393A3H;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.1;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = sparklers.AstronomyFeedAPIEndToEndTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -523,6 +630,15 @@
 			buildConfigurations = (
 				98B719582B9DF22E0025CAF6 /* Debug */,
 				98B719592B9DF22E0025CAF6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		98CF753B2D23C62C008930A8 /* Build configuration list for PBXNativeTarget "AstronomyFeedAPIEndToEndTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				98CF753C2D23C62C008930A8 /* Debug */,
+				98CF753D2D23C62C008930A8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

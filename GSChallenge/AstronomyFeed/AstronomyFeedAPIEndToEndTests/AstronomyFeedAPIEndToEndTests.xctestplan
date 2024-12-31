@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "39D3F45D-E24E-4D9D-9998-5B2609EC5946",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testExecutionOrdering" : "random"
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:AstronomyFeed.xcodeproj",
+        "identifier" : "98CF75332D23C62C008930A8",
+        "name" : "AstronomyFeedAPIEndToEndTests"
+      }
+    }
+  ],
+  "version" : 1
+}

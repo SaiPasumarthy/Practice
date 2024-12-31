@@ -9,6 +9,11 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>AstronomyFeedAPIEndToEndTests.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 		<key>AstronomyFeedTests.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -23,6 +28,11 @@
 			<true/>
 		</dict>
 		<key>98B7194F2B9DF22E0025CAF6</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>98CF75332D23C62C008930A8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
