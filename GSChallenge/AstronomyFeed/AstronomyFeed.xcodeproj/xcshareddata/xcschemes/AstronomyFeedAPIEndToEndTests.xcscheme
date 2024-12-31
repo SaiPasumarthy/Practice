@@ -14,7 +14,7 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <TestPlans>
          <TestPlanReference
-            reference = "container:AstronomyFeedAPIEndToEndTests.xctestplan"
+            reference = "container:AstronomyFeedAPIEndToEndTests/AstronomyFeedAPIEndToEndTests.xctestplan"
             default = "YES">
          </TestPlanReference>
       </TestPlans>

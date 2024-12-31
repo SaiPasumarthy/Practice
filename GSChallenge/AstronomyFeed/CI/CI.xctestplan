@@ -1,0 +1,33 @@
+{
+  "configurations" : [
+    {
+      "id" : "F1A95BD5-AEB6-4EA0-8FAE-8C33D1F24F0F",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testExecutionOrdering" : "random"
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:AstronomyFeed.xcodeproj",
+        "identifier" : "98CF75332D23C62C008930A8",
+        "name" : "AstronomyFeedAPIEndToEndTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:AstronomyFeed.xcodeproj",
+        "identifier" : "98B7194F2B9DF22E0025CAF6",
+        "name" : "AstronomyFeedTests"
+      }
+    }
+  ],
+  "version" : 1
+}
