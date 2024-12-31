@@ -18,9 +18,11 @@ class URLSessionHTTPClient {
     private struct UnexpectedValuesRepresentation: Error {}
     
     func get(from url: URL, completion: @escaping (HTTPClientResult) -> Void) {
-        session.dataTask(with: URLRequest(url: url)) { _, _, error in
-            if let error {
+        session.dataTask(with: URLRequest(url: url)) { data, response, error in
+            if let error  {
                 completion(.failure(error))
+            } else if let data, data.count > 0, let response = response as? HTTPURLResponse {
+                completion(.success((data, response)))
             } else {
                 completion(.failure(UnexpectedValuesRepresentation()))
             }
@@ -79,6 +81,17 @@ final class URLSessionHTTPClientTests: XCTestCase {
         XCTAssertNotNil(resultErrorFor(data: anyData(), response: anyURLResponse(), error: nil))
     }
     
+    func test_getFromURL_successOnHTTPURLResponseWithData() {
+        let data = anyData()
+        let response = anyHTTPURLResponse()
+        
+        let receivedValues = resultValueFor(data: data, response: response, error: nil)
+        
+        XCTAssertEqual(receivedValues?.data, data)
+        XCTAssertEqual(receivedValues?.response.url, response.url)
+        XCTAssertEqual(receivedValues?.response.statusCode, response.statusCode)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> URLSessionHTTPClient {
@@ -86,15 +99,16 @@ final class URLSessionHTTPClientTests: XCTestCase {
         trackMemoryLeaks(for: sut, file: file, line: line)
         return sut
     }
-    
-    private func resultForValue(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #filePath, line: UInt = #line) {
+
+    private func resultValueFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #filePath, line: UInt = #line) -> (data: Data, response: HTTPURLResponse)? {
         URLProtocolStub.stub(data: data, response: response, error: error)
-        
+        var receivedValues: (Data, HTTPURLResponse)?
         let exp = expectation(description: "Wait for load to complete")
         
         makeSUT(file: file, line: line).get(from: anyURL()) { result in
             switch result {
-            case .success:
+            case let .success((data, response)):
+                receivedValues = (data, response)
                 break
                 
             default:
@@ -105,9 +119,9 @@ final class URLSessionHTTPClientTests: XCTestCase {
         }
         
         wait(for: [exp], timeout: 1.0)
-
+        return receivedValues
     }
-
+    
     private func resultErrorFor(data: Data?, response: URLResponse?, error: Error?, file: StaticString = #filePath, line: UInt = #line) -> Error? {
         URLProtocolStub.stub(data: data, response: response, error: error)
         var receivedError: Error?
@@ -143,11 +157,11 @@ final class URLSessionHTTPClientTests: XCTestCase {
     }
     
     private func anyHTTPURLResponse() -> HTTPURLResponse {
-        HTTPURLResponse(url: anyURL(), statusCode: 1, httpVersion: nil, headerFields: nil)!
+        HTTPURLResponse(url: anyURL(), statusCode: 200, httpVersion: nil, headerFields: nil)!
     }
     
     private func anyData() -> Data {
-        Data("any data".utf8)
+        Data.init("any data".utf8)
     }
     
     private class URLProtocolStub: URLProtocol {
@@ -195,7 +209,12 @@ final class URLSessionHTTPClientTests: XCTestCase {
             if let error = stub.error {
                 client?.urlProtocol(self, didFailWithError: error)
             }
-            
+            if let response = stub.response {
+                client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+            }
+            if let data = stub.data {
+                client?.urlProtocol(self, didLoad: data)
+            }
             client?.urlProtocolDidFinishLoading(self)
         }
         
