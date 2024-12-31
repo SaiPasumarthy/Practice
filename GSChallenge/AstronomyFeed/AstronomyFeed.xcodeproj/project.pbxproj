@@ -42,6 +42,7 @@
 		98CF75272D1DC94E008930A8 /* URLSessionHTTPClientTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClientTests.swift; sourceTree = "<group>"; };
 		98CF752A2D2306F6008930A8 /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
 		98CF752C2D23BEC0008930A8 /* URLSessionHTTPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSessionHTTPClient.swift; sourceTree = "<group>"; };
+		98CF752F2D23C545008930A8 /* AstronomyFeedTests.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = AstronomyFeedTests.xctestplan; sourceTree = "<group>"; };
 		98D998332D19CD2B00D26162 /* RemoteFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteFeedLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -95,6 +96,7 @@
 		98B719512B9DF22E0025CAF6 /* AstronomyFeedTests */ = {
 			isa = PBXGroup;
 			children = (
+				98CF752F2D23C545008930A8 /* AstronomyFeedTests.xctestplan */,
 				98CF75292D1F068A008930A8 /* FeedAPI */,
 			);
 			path = AstronomyFeedTests;
