@@ -28,22 +28,29 @@ class FeedStore {
 class LocalFeedLoaderTests: XCTestCase {
     
     func test_init_doNotCallDeleteCallCount() {
-        let store = FeedStore()
-        let _ = LocalFeedLoader(store: store)
+        let (store, _) = makeSUT()
         
         XCTAssertEqual(store.deleteCallCount, 0)
     }
     
     func test_save_callDeleteCallCount() {
-        let store = FeedStore()
-        let sut = LocalFeedLoader(store: store)
+        let (store, loader) = makeSUT()
         
-        sut.save([uniqueItem()])
+        loader.save([uniqueItem()])
         XCTAssertEqual(store.deleteCallCount, 1)
     }
     
     // MARK: - Helpers
+    
+    private func makeSUT() -> (store: FeedStore, loader: LocalFeedLoader) {
+        let store = FeedStore()
+        let sut = LocalFeedLoader(store: store)
+        trackMemoryLeaks(for: store)
+        trackMemoryLeaks(for: sut)
         
+        return (store, sut)
+    }
+    
     private func uniqueItem() -> FeedPicture {
         FeedPicture(
             date: "12-21-2024",
