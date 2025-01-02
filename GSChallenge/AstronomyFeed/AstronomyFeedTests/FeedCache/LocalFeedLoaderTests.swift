@@ -6,20 +6,50 @@
 //
 
 import XCTest
+import AstronomyFeed
+
 class LocalFeedLoader {
+    private let store: FeedStore
     init(store: FeedStore) {
-        
+        self.store = store
+    }
+    
+    func save(_ pictures: [FeedPicture]) {
+        store.deleteCache(pictures: pictures)
     }
 }
 class FeedStore {
     var deleteCallCount: Int = 0
+    
+    func deleteCache(pictures: [FeedPicture]) {
+        deleteCallCount += 1
+    }
 }
 class LocalFeedLoaderTests: XCTestCase {
     
     func test_init_doNotCallDeleteCallCount() {
         let store = FeedStore()
-        let sut = LocalFeedLoader(store: store)
+        let _ = LocalFeedLoader(store: store)
         
         XCTAssertEqual(store.deleteCallCount, 0)
+    }
+    
+    func test_save_callDeleteCallCount() {
+        let store = FeedStore()
+        let sut = LocalFeedLoader(store: store)
+        
+        sut.save([uniqueItem()])
+        XCTAssertEqual(store.deleteCallCount, 1)
+    }
+    
+    // MARK: - Helpers
+        
+    private func uniqueItem() -> FeedPicture {
+        FeedPicture(
+            date: "12-21-2024",
+            explanation: "a explanation",
+            title: "a title",
+            url: "http://www.a-url.com"
+        )
     }
 }
