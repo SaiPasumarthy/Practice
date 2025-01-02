@@ -32,24 +32,24 @@ class FeedStore {
 class LocalFeedLoaderTests: XCTestCase {
     
     func test_init_doesNotDeleteCachedFeedUponCreation() {
-        let (store, _) = makeSUT()
-        
+        let (_, store) = makeSUT()
+
         XCTAssertEqual(store.deleteCacheCallCount, 0)
     }
     
     func test_save_requestCacheDeletion() {
-        let (store, loader) = makeSUT()
-        
-        loader.save([uniqueItem()])
+        let (sut, store) = makeSUT()
+
+        sut.save([uniqueItem()])
                 
         XCTAssertEqual(store.deleteCacheCallCount, 1)
     }
 
     func test_save_doesNotRequestInsertCacheOnDeletionError() {
-        let (store, loader) = makeSUT()
+        let (sut, store) = makeSUT()
         let deletionError = anyNSError()
         
-        loader.save([uniqueItem()])
+        sut.save([uniqueItem()])
         
         store.completeDeletion(with: deletionError)
         
@@ -58,13 +58,13 @@ class LocalFeedLoaderTests: XCTestCase {
 
     // MARK: - Helpers
     
-    private func makeSUT() -> (store: FeedStore, loader: LocalFeedLoader) {
+    private func makeSUT() -> (sut: LocalFeedLoader, store: FeedStore) {
         let store = FeedStore()
         let sut = LocalFeedLoader(store: store)
         trackMemoryLeaks(for: store)
         trackMemoryLeaks(for: sut)
         
-        return (store, sut)
+        return (sut, store)
     }
     
     private func uniqueItem() -> FeedPicture {
