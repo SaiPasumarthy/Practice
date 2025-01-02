@@ -26,7 +26,7 @@ final class AstronomyFeedAPIEndToEndTests: XCTestCase {
     private func getPictureResult(file: StaticString = #filePath, line: UInt = #line) -> LoadFeedResult? {
         let url = URL(string: "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY")!
         let exp = expectation(description: "Wait for load result")
-        let client = URLSessionHTTPClient()
+        let client = URLSessionHTTPClient(session: URLSession(configuration: .ephemeral))
         let loader = RemoteFeedLoader(url: url, client: client)
         var receivedResult: LoadFeedResult?
         trackMemoryLeaks(for: client, file: file, line: line)
