@@ -15,31 +15,47 @@ class LocalFeedLoader {
     }
     
     func save(_ pictures: [FeedPicture]) {
-        store.deleteCache(pictures: pictures)
+        store.deleteCachedFeed()
     }
 }
 class FeedStore {
-    var deleteCallCount: Int = 0
+    var deleteCacheCallCount = 0
+    var insertCacheCallCount = 0
     
-    func deleteCache(pictures: [FeedPicture]) {
-        deleteCallCount += 1
+    func deleteCachedFeed() {
+        deleteCacheCallCount += 1
+    }
+    
+    func completeDeletion(with error: Error, at index: Int = 0) {
     }
 }
 class LocalFeedLoaderTests: XCTestCase {
     
-    func test_init_doNotCallDeleteCallCount() {
+    func test_init_doesNotDeleteCachedFeedUponCreation() {
         let (store, _) = makeSUT()
         
-        XCTAssertEqual(store.deleteCallCount, 0)
+        XCTAssertEqual(store.deleteCacheCallCount, 0)
     }
     
-    func test_save_callDeleteCallCount() {
+    func test_save_requestCacheDeletion() {
         let (store, loader) = makeSUT()
         
         loader.save([uniqueItem()])
-        XCTAssertEqual(store.deleteCallCount, 1)
+                
+        XCTAssertEqual(store.deleteCacheCallCount, 1)
     }
-    
+
+    func test_save_doesNotRequestInsertCacheOnDeletionError() {
+        let (store, loader) = makeSUT()
+        let deletionError = anyNSError()
+        
+        loader.save([uniqueItem()])
+        
+        store.completeDeletion(with: deletionError)
+        
+        XCTAssertEqual(store.insertCacheCallCount, 0)
+    }
+
     // MARK: - Helpers
     
     private func makeSUT() -> (store: FeedStore, loader: LocalFeedLoader) {
@@ -58,5 +74,9 @@ class LocalFeedLoaderTests: XCTestCase {
             title: "a title",
             url: "http://www.a-url.com"
         )
+    }
+    
+    private func anyNSError() -> NSError {
+        NSError(domain: "any error", code: 1)
     }
 }
