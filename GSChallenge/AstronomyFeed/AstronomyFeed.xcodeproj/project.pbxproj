@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		988AC3592D26F8F0002E0B56 /* LocalFeedLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988AC3582D26F8F0002E0B56 /* LocalFeedLoaderTests.swift */; };
 		98B719462B9DF2170025CAF6 /* AstronomyFeed.h in Headers */ = {isa = PBXBuildFile; fileRef = 98B719452B9DF2170025CAF6 /* AstronomyFeed.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		98B719532B9DF22E0025CAF6 /* RemoteFeedLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B719522B9DF22E0025CAF6 /* RemoteFeedLoaderTests.swift */; };
 		98B719542B9DF22E0025CAF6 /* AstronomyFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B719422B9DF2170025CAF6 /* AstronomyFeed.framework */; };
@@ -42,6 +43,7 @@
 
 /* Begin PBXFileReference section */
 		988AC3562D23DE67002E0B56 /* CI.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CI.xctestplan; sourceTree = "<group>"; };
+		988AC3582D26F8F0002E0B56 /* LocalFeedLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFeedLoaderTests.swift; sourceTree = "<group>"; };
 		98B719422B9DF2170025CAF6 /* AstronomyFeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AstronomyFeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		98B719452B9DF2170025CAF6 /* AstronomyFeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AstronomyFeed.h; sourceTree = "<group>"; };
 		98B719502B9DF22E0025CAF6 /* AstronomyFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AstronomyFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,6 +97,14 @@
 			path = CI;
 			sourceTree = "<group>";
 		};
+		988AC3572D26F8BF002E0B56 /* FeedCache */ = {
+			isa = PBXGroup;
+			children = (
+				988AC3582D26F8F0002E0B56 /* LocalFeedLoaderTests.swift */,
+			);
+			path = FeedCache;
+			sourceTree = "<group>";
+		};
 		98B719382B9DF2170025CAF6 = {
 			isa = PBXGroup;
 			children = (
@@ -131,6 +141,7 @@
 			children = (
 				98CF752F2D23C545008930A8 /* AstronomyFeedTests.xctestplan */,
 				98CF75292D1F068A008930A8 /* FeedAPI */,
+				988AC3572D26F8BF002E0B56 /* FeedCache */,
 			);
 			path = AstronomyFeedTests;
 			sourceTree = "<group>";
@@ -327,6 +338,7 @@
 			files = (
 				98B719532B9DF22E0025CAF6 /* RemoteFeedLoaderTests.swift in Sources */,
 				98CF75282D1DC94E008930A8 /* URLSessionHTTPClientTests.swift in Sources */,
+				988AC3592D26F8F0002E0B56 /* LocalFeedLoaderTests.swift in Sources */,
 				98CF752B2D2306F6008930A8 /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
