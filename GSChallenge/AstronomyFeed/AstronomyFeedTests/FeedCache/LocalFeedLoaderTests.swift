@@ -8,43 +8,6 @@
 import XCTest
 import AstronomyFeed
 
-class LocalFeedLoader {
-    private let store: FeedStore
-    init(store: FeedStore) {
-        self.store = store
-    }
-    
-    typealias SaveResult = Error?
-    
-    func save(_ pictures: [FeedPicture], completion: @escaping (SaveResult) -> Void) {
-        store.deleteCachedFeed { [weak self] error in
-            guard let self = self else { return }
-            
-            if let deletionCacheError = error {
-                completion(deletionCacheError)
-            } else {
-                self.cache(pictures, completion: completion)
-            }
-        }
-    }
-    
-    private func cache(_ pictures: [FeedPicture], completion: @escaping (SaveResult) -> Void) {
-        store.insert(pictures) { [weak self] error in
-            guard self != nil else { return }
-            
-            completion(error)
-        }
-    }
-}
-
-protocol FeedStore {
-    typealias DeleteCompletion = (Error?) -> Void
-    typealias InsertCompletion = (Error?) -> Void
-
-    func deleteCachedFeed(completion: @escaping DeleteCompletion)
-    func insert(_ pictures: [FeedPicture], completion: @escaping InsertCompletion)
-}
-
 class LocalFeedLoaderTests: XCTestCase {
     
     func test_init_doesNotMessageCachedFeedUponCreation() {

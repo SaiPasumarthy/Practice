@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		988AC3592D26F8F0002E0B56 /* LocalFeedLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988AC3582D26F8F0002E0B56 /* LocalFeedLoaderTests.swift */; };
+		988AC35D2D27F068002E0B56 /* LocalFeedLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988AC35C2D27F068002E0B56 /* LocalFeedLoader.swift */; };
+		988AC35F2D27F0A3002E0B56 /* FeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 988AC35E2D27F0A3002E0B56 /* FeedStore.swift */; };
 		98B719462B9DF2170025CAF6 /* AstronomyFeed.h in Headers */ = {isa = PBXBuildFile; fileRef = 98B719452B9DF2170025CAF6 /* AstronomyFeed.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		98B719532B9DF22E0025CAF6 /* RemoteFeedLoaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98B719522B9DF22E0025CAF6 /* RemoteFeedLoaderTests.swift */; };
 		98B719542B9DF22E0025CAF6 /* AstronomyFeed.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 98B719422B9DF2170025CAF6 /* AstronomyFeed.framework */; };
@@ -44,6 +46,8 @@
 /* Begin PBXFileReference section */
 		988AC3562D23DE67002E0B56 /* CI.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = CI.xctestplan; sourceTree = "<group>"; };
 		988AC3582D26F8F0002E0B56 /* LocalFeedLoaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFeedLoaderTests.swift; sourceTree = "<group>"; };
+		988AC35C2D27F068002E0B56 /* LocalFeedLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFeedLoader.swift; sourceTree = "<group>"; };
+		988AC35E2D27F0A3002E0B56 /* FeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedStore.swift; sourceTree = "<group>"; };
 		98B719422B9DF2170025CAF6 /* AstronomyFeed.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AstronomyFeed.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		98B719452B9DF2170025CAF6 /* AstronomyFeed.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AstronomyFeed.h; sourceTree = "<group>"; };
 		98B719502B9DF22E0025CAF6 /* AstronomyFeedTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AstronomyFeedTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -113,6 +117,15 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		988AC35B2D27F05C002E0B56 /* FeedCache */ = {
+			isa = PBXGroup;
+			children = (
+				988AC35C2D27F068002E0B56 /* LocalFeedLoader.swift */,
+				988AC35E2D27F0A3002E0B56 /* FeedStore.swift */,
+			);
+			path = FeedCache;
+			sourceTree = "<group>";
+		};
 		98B719382B9DF2170025CAF6 = {
 			isa = PBXGroup;
 			children = (
@@ -138,6 +151,7 @@
 			isa = PBXGroup;
 			children = (
 				98B719452B9DF2170025CAF6 /* AstronomyFeed.h */,
+				988AC35B2D27F05C002E0B56 /* FeedCache */,
 				98D998322D19CD1200D26162 /* FeedAPI */,
 				98B7195A2B9DF2730025CAF6 /* FeedFeature */,
 			);
@@ -334,6 +348,8 @@
 				98CF75262D1D708B008930A8 /* FeedPictureMapper.swift in Sources */,
 				98B7195E2B9DF2730025CAF6 /* FeedPicture.swift in Sources */,
 				98D998342D19CD2B00D26162 /* RemoteFeedLoader.swift in Sources */,
+				988AC35F2D27F0A3002E0B56 /* FeedStore.swift in Sources */,
+				988AC35D2D27F068002E0B56 /* LocalFeedLoader.swift in Sources */,
 				98CF75242D1D6FE3008930A8 /* HTTPClient.swift in Sources */,
 				98B7195D2B9DF2730025CAF6 /* FeedLoader.swift in Sources */,
 				98CF752D2D23BEC0008930A8 /* URLSessionHTTPClient.swift in Sources */,
