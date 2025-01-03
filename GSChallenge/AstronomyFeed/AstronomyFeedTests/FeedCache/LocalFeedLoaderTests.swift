@@ -14,7 +14,9 @@ class LocalFeedLoader {
         self.store = store
     }
     
-    func save(_ pictures: [FeedPicture], completion: @escaping (Error?) -> Void) {
+    typealias SaveResult = Error?
+    
+    func save(_ pictures: [FeedPicture], completion: @escaping (SaveResult) -> Void) {
         store.deleteCachedFeed { [weak self] error in
             guard let self = self else { return }
             
@@ -108,7 +110,7 @@ class LocalFeedLoaderTests: XCTestCase {
     func test_save_doesNotReturnDeletionErrorAfterSUTInstanceHasBeenDeallocated() {
         let store = FeedStoreSpy()
         var sut: LocalFeedLoader? = LocalFeedLoader(store: store)
-        var receivedResults = [Error?]()
+        var receivedResults = [LocalFeedLoader.SaveResult]()
         
         sut?.save([uniqueItem()], completion: { error in receivedResults.append(error)})
         
@@ -121,7 +123,7 @@ class LocalFeedLoaderTests: XCTestCase {
     func test_save_doesNotReturnInsertionErrorAfterSUTInstanceHasBeenDeallocated() {
         let store = FeedStoreSpy()
         var sut: LocalFeedLoader? = LocalFeedLoader(store: store)
-        var receivedResults = [Error?]()
+        var receivedResults = [LocalFeedLoader.SaveResult]()
         
         sut?.save([uniqueItem()], completion: { error in receivedResults.append(error)})
         
