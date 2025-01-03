@@ -24,10 +24,18 @@ class LocalFeedLoader {
 }
 class FeedStore {
     typealias DeleteCompletion = (Error?) -> Void
-    var insertCacheCallCount = 0
+    
+    enum ReceivedMessage: Equatable {
+        case deleteCachedPicture
+        case insert(pictures: [FeedPicture])
+    }
+
     var deleteCompletions = [DeleteCompletion]()
     
+    var receivedMessages = [ReceivedMessage]()
+    
     func deleteCachedFeed(completion: @escaping DeleteCompletion) {
+        receivedMessages.append(.deleteCachedPicture)
         deleteCompletions.append(completion)
     }
     
@@ -40,7 +48,7 @@ class FeedStore {
     }
     
     func insert(_ pictures: [FeedPicture]) {
-        insertCacheCallCount += 1
+        receivedMessages.append(.insert(pictures: pictures))
     }
 }
 class LocalFeedLoaderTests: XCTestCase {
@@ -48,7 +56,7 @@ class LocalFeedLoaderTests: XCTestCase {
     func test_init_doesNotDeleteCachedFeedUponCreation() {
         let (_, store) = makeSUT()
 
-        XCTAssertEqual(store.deleteCompletions.count, 0)
+        XCTAssertEqual(store.receivedMessages, [])
     }
     
     func test_save_requestCacheDeletion() {
@@ -56,7 +64,7 @@ class LocalFeedLoaderTests: XCTestCase {
 
         sut.save([uniqueItem()])
                 
-        XCTAssertEqual(store.deleteCompletions.count, 1)
+        XCTAssertEqual(store.receivedMessages, [.deleteCachedPicture])
     }
 
     func test_save_doesNotRequestInsertCacheOnDeletionError() {
@@ -67,17 +75,17 @@ class LocalFeedLoaderTests: XCTestCase {
         
         store.completeDeletion(with: deletionError)
         
-        XCTAssertEqual(store.insertCacheCallCount, 0)
+        XCTAssertEqual(store.receivedMessages, [.deleteCachedPicture])
     }
     
     func test_save_requestNewCacheInsertionOnSuccessfulDeletion() {
         let (sut, store) = makeSUT()
-        
-        sut.save([uniqueItem()])
+        let pictures = [uniqueItem()]
+        sut.save(pictures)
         
         store.completeDeletionSuccessfully()
         
-        XCTAssertEqual(store.insertCacheCallCount, 1)
+        XCTAssertEqual(store.receivedMessages, [.deleteCachedPicture, .insert(pictures: pictures)])
     }
 
     // MARK: - Helpers
