@@ -29,10 +29,28 @@ public final class RemoteFeedLoader: FeedLoader {
 
             switch result {
             case let .success((data, response)):
-                completion(FeedPictureMapper.map(data, response))
+                do {
+                    let items = try FeedPictureMapper.map(data, response)
+                    completion(.success(items.toModel()))
+                } catch {
+                    completion(.failure(error))
+                }
             case .failure:
                 completion(.failure(Error.connectivity))
             }
+        }
+    }
+}
+
+private extension Array where Element == RemoteFeedPicture {
+    func toModel() -> [FeedPicture] {
+        map {
+            FeedPicture(
+                date: $0.date,
+                explanation: $0.explanation,
+                title: $0.title,
+                url: $0.url
+            )
         }
     }
 }

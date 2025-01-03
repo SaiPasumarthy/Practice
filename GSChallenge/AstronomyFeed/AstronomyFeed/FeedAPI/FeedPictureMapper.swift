@@ -7,31 +7,23 @@
 
 import Foundation
 
+struct RemoteFeedPicture: Decodable {
+    let date: String
+    let explanation: String
+    let title: String
+    let url: String
+}
+
 final class FeedPictureMapper {
-    private struct RemoteFeedPicture: Decodable {
-        private let date: String
-        private let explanation: String
-        private let title: String
-        private let url: String
-        
-        var picture: FeedPicture {
-            FeedPicture(
-                date: date,
-                explanation: explanation,
-                title: title,
-                url: url
-            )
-        }
-    }
     
     static private var OK_200: Int { return 200 }
         
-    static func map(_ data: Data, _ response: HTTPURLResponse) -> RemoteFeedLoader.Result {
+    static func map(_ data: Data, _ response: HTTPURLResponse) throws -> [RemoteFeedPicture] {
         guard response.statusCode == OK_200,
                 let feed = try? JSONDecoder().decode(RemoteFeedPicture.self, from: data) else {
-            return .failure(RemoteFeedLoader.Error.invalidData)
+            throw RemoteFeedLoader.Error.invalidData
         }
 
-        return .success([feed.picture])
+        return [feed]
     }
 }
