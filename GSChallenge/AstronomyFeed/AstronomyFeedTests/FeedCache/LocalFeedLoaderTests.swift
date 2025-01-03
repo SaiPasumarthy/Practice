@@ -15,7 +15,9 @@ class LocalFeedLoader {
     }
     
     func save(_ pictures: [FeedPicture], completion: @escaping (Error?) -> Void) {
-        store.deleteCachedFeed { [unowned self] error in
+        store.deleteCachedFeed { [weak self] error in
+            guard let self = self else { return }
+            
             if error == nil {
                 self.store.insert(pictures, completion: completion)
             } else {
@@ -99,6 +101,19 @@ class LocalFeedLoaderTests: XCTestCase {
         }
     }
 
+    func test_save_doesNotReturnDeletionErrorAfterSUTInstanceHasBeenDeallocated() {
+        let store = FeedStoreSpy()
+        var sut: LocalFeedLoader? = LocalFeedLoader(store: store)
+        var receivedResults = [Error?]()
+        
+        sut?.save([uniqueItem()], completion: { error in receivedResults.append(error)})
+        
+        sut = nil
+        store.completeDeletion(with: anyNSError())
+        
+        XCTAssertTrue(receivedResults.isEmpty)
+    }
+    
     // MARK: - Helpers
     
     func expect(sut: LocalFeedLoader, toCompletionWith expectedError: NSError?, when action: () -> Void, file: StaticString = #filePath, line: UInt = #line) {
