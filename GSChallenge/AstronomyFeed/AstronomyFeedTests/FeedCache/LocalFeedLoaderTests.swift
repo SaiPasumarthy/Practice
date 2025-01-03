@@ -14,8 +14,9 @@ class LocalFeedLoader {
         self.store = store
     }
     
-    func save(_ pictures: [FeedPicture]) {
+    func save(_ pictures: [FeedPicture], completion: @escaping (Error?) -> Void) {
         store.deleteCachedFeed { [unowned self] error in
+            completion(error)
             if error == nil {
                 self.store.insert(pictures)
             }
@@ -62,7 +63,7 @@ class LocalFeedLoaderTests: XCTestCase {
     func test_save_requestCacheDeletion() {
         let (sut, store) = makeSUT()
 
-        sut.save([uniqueItem()])
+        sut.save([uniqueItem()]) { _ in }
                 
         XCTAssertEqual(store.receivedMessages, [.deleteCachedPicture])
     }
@@ -71,7 +72,7 @@ class LocalFeedLoaderTests: XCTestCase {
         let (sut, store) = makeSUT()
         let deletionError = anyNSError()
         
-        sut.save([uniqueItem()])
+        sut.save([uniqueItem()]) { _ in }
         
         store.completeDeletion(with: deletionError)
         
@@ -81,13 +82,31 @@ class LocalFeedLoaderTests: XCTestCase {
     func test_save_requestNewCacheInsertionOnSuccessfulDeletion() {
         let (sut, store) = makeSUT()
         let pictures = [uniqueItem()]
-        sut.save(pictures)
+        
+        sut.save(pictures) { _ in }
         
         store.completeDeletionSuccessfully()
         
         XCTAssertEqual(store.receivedMessages, [.deleteCachedPicture, .insert(pictures: pictures)])
     }
 
+    func test_save_failsOnDeletionError() {
+        let (sut, store) = makeSUT()
+        let deletionError = anyNSError()
+        var receivedError: Error?
+        let exp = expectation(description: "Wait for save command")
+        
+        sut.save([uniqueItem()]) { error in
+            receivedError = error
+            exp.fulfill()
+        }
+        
+        store.completeDeletion(with: deletionError)
+        wait(for: [exp], timeout: 1.0)
+        
+        XCTAssertEqual(receivedError as? NSError, deletionError)
+    }
+    
     // MARK: - Helpers
     
     private func makeSUT() -> (sut: LocalFeedLoader, store: FeedStore) {
