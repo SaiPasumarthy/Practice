@@ -29,10 +29,18 @@ public final class LocalFeedLoader {
     }
     
     private func cache(_ pictures: [FeedPicture], completion: @escaping (SaveResult) -> Void) {
-        store.insert(pictures) { [weak self] error in
+        store.insert(pictures.toLocal()) { [weak self] error in
             guard self != nil else { return }
             
             completion(error)
+        }
+    }
+}
+
+private extension Array where Element == FeedPicture {
+    func toLocal() -> [LocalFeedPicture] {
+        map {
+            LocalFeedPicture(date: $0.date, explanation: $0.explanation, title: $0.title, url: $0.url)
         }
     }
 }

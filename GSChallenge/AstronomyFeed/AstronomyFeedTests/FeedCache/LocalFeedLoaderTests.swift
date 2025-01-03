@@ -38,12 +38,19 @@ class LocalFeedLoaderTests: XCTestCase {
     func test_save_requestNewCacheInsertionOnSuccessfulDeletion() {
         let (sut, store) = makeSUT()
         let pictures = [uniqueItem()]
-        
+        let local = pictures.map {
+            LocalFeedPicture(
+                date: $0.date,
+                explanation: $0.explanation,
+                title: $0.title,
+                url: $0.url
+            )
+        }
         sut.save(pictures) { _ in }
         
         store.completeDeletionSuccessfully()
         
-        XCTAssertEqual(store.receivedMessages, [.deleteCachedPicture, .insert(pictures: pictures)])
+        XCTAssertEqual(store.receivedMessages, [.deleteCachedPicture, .insert(pictures: local)])
     }
 
     func test_save_failsOnDeletionError() {
@@ -131,7 +138,7 @@ class LocalFeedLoaderTests: XCTestCase {
     private class FeedStoreSpy: FeedStore {
         enum ReceivedMessage: Equatable {
             case deleteCachedPicture
-            case insert(pictures: [FeedPicture])
+            case insert(pictures: [LocalFeedPicture])
         }
 
         var deleteCompletions = [DeleteCompletion]()
@@ -152,7 +159,7 @@ class LocalFeedLoaderTests: XCTestCase {
             deleteCompletions[index](nil)
         }
         
-        func insert(_ pictures: [FeedPicture], completion: @escaping InsertCompletion) {
+        func insert(_ pictures: [LocalFeedPicture], completion: @escaping InsertCompletion) {
             insertCompletions.append(completion)
             receivedMessages.append(.insert(pictures: pictures))
         }
