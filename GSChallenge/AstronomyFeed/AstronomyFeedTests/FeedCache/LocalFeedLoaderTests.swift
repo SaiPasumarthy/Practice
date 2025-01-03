@@ -24,46 +24,15 @@ class LocalFeedLoader {
         }
     }
 }
-class FeedStore {
+
+protocol FeedStore {
     typealias DeleteCompletion = (Error?) -> Void
     typealias InsertCompletion = (Error?) -> Void
-    
-    enum ReceivedMessage: Equatable {
-        case deleteCachedPicture
-        case insert(pictures: [FeedPicture])
-    }
 
-    var deleteCompletions = [DeleteCompletion]()
-    var insertCompletions = [InsertCompletion]()
-    
-    var receivedMessages = [ReceivedMessage]()
-    
-    func deleteCachedFeed(completion: @escaping DeleteCompletion) {
-        receivedMessages.append(.deleteCachedPicture)
-        deleteCompletions.append(completion)
-    }
-    
-    func completeDeletion(with error: Error, at index: Int = 0) {
-        deleteCompletions[index](error)
-    }
-    
-    func completeDeletionSuccessfully(at index: Int = 0) {
-        deleteCompletions[index](nil)
-    }
-    
-    func insert(_ pictures: [FeedPicture], completion: @escaping InsertCompletion) {
-        insertCompletions.append(completion)
-        receivedMessages.append(.insert(pictures: pictures))
-    }
-    
-    func completeInsertion(with error: Error, at index: Int = 0) {
-        insertCompletions[index](error)
-    }
-    
-    func completeInsertionSuccessfully(at index: Int = 0) {
-        insertCompletions[index](nil)
-    }
+    func deleteCachedFeed(completion: @escaping DeleteCompletion)
+    func insert(_ pictures: [FeedPicture], completion: @escaping InsertCompletion)
 }
+
 class LocalFeedLoaderTests: XCTestCase {
     
     func test_init_doesNotMessageCachedFeedUponCreation() {
@@ -148,14 +117,51 @@ class LocalFeedLoaderTests: XCTestCase {
         XCTAssertEqual(receivedError as? NSError, expectedError, file: file, line: line)
     }
 
-    
-    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: LocalFeedLoader, store: FeedStore) {
-        let store = FeedStore()
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (sut: LocalFeedLoader, store: FeedStoreSpy) {
+        let store = FeedStoreSpy()
         let sut = LocalFeedLoader(store: store)
         trackMemoryLeaks(for: store, file: file, line: line)
         trackMemoryLeaks(for: sut, file: file, line: line)
         
         return (sut, store)
+    }
+    
+    private class FeedStoreSpy: FeedStore {
+        enum ReceivedMessage: Equatable {
+            case deleteCachedPicture
+            case insert(pictures: [FeedPicture])
+        }
+
+        var deleteCompletions = [DeleteCompletion]()
+        var insertCompletions = [InsertCompletion]()
+        
+        var receivedMessages = [ReceivedMessage]()
+        
+        func deleteCachedFeed(completion: @escaping DeleteCompletion) {
+            receivedMessages.append(.deleteCachedPicture)
+            deleteCompletions.append(completion)
+        }
+        
+        func completeDeletion(with error: Error, at index: Int = 0) {
+            deleteCompletions[index](error)
+        }
+        
+        func completeDeletionSuccessfully(at index: Int = 0) {
+            deleteCompletions[index](nil)
+        }
+        
+        func insert(_ pictures: [FeedPicture], completion: @escaping InsertCompletion) {
+            insertCompletions.append(completion)
+            receivedMessages.append(.insert(pictures: pictures))
+        }
+        
+        func completeInsertion(with error: Error, at index: Int = 0) {
+            insertCompletions[index](error)
+        }
+        
+        func completeInsertionSuccessfully(at index: Int = 0) {
+            insertCompletions[index](nil)
+        }
     }
     
     private func uniqueItem() -> FeedPicture {
