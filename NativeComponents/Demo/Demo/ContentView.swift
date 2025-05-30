@@ -25,7 +25,9 @@ struct ContentView: View {
                     
                     SPTextField(
                         placeholder: "Enter some text",
-                        text: $textFieldText
+                        text: $textFieldText,
+                        isSecure: false,
+                        keyboardType: .default
                     )
                 }
                 .padding()
